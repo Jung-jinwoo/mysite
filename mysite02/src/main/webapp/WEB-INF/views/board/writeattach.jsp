@@ -16,11 +16,28 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-					<input type="hidden" name="a" value="write">
+					<input type="hidden" name="a" value="writeattach">
 					<input type="hidden" name="userNo" value="${authUser.no }">
+					<input type="hidden" name="boardNo" value="${board.no }">
+					<input type="hidden" name="groupNo" value="${board.groupNo }">
+					<input type="hidden" name="orderNo" value="${board.orderNo }">
+					<input type="hidden" name="depth" value="${board.depth }">
 					<table class="tbl-ex">
 						<tr>
-							<th colspan="2">글쓰기</th>
+							<th colspan="2">${user.name }</th>
+						</tr>
+						<tr>
+							<td class="label">제목</td>
+							<td>${board.title }</td>
+						</tr>
+						<tr>
+							<td class="label">내용</td>
+							<td><textarea id="content" readonly="readonly">${board.contents }</textarea></td>
+						</tr>
+					</table>
+					<table class="tbl-ex">
+						<tr>
+							<th colspan="2">답글쓰기</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
@@ -32,7 +49,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="">취소</a> <input type="submit" value="등록">
+						<a href="${pageContext.request.contextPath }/board?a=view&no=${board.userNo}&boardNo=${board.no}">취소</a> <input type="submit" value="등록">
 					</div>
 				</form>
 			</div>

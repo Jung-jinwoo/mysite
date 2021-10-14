@@ -1,0 +1,39 @@
+package com.douzone.mysite.mvc.board;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.douzone.mysite.dao.BoardDao;
+import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.PageVo;
+import com.douzone.web.mvc.Action;
+import com.douzone.web.util.MvcUtil;
+
+public class PageAction implements Action {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<BoardVo> list = new BoardDao().findAll();
+		
+		PageVo page = new PageVo();
+		
+		if(page.getCurrentno() == 0) {
+			page.setCurrentno(1);
+		}
+		
+		page.setPrev(page.getCurrentno() -1);
+		page.setNext(page.getCurrentno() +1);
+		page.setTotalpage(Math.ceil(list.size() / 5));
+		
+		request.setAttribute("list", list);
+		request.setAttribute("page", page);
+		System.out.println(page.getTotalpage());
+		
+		MvcUtil.forward("/board/list", request, response);
+	}
+
+}
