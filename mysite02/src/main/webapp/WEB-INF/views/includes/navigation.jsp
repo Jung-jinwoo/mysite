@@ -14,13 +14,14 @@
 		<ul>
 			<c:choose>
 				<c:when test='${empty authUser }'>
-					<li><a href="${pageContext.request.contextPath }">정진우</a></li>
+					<li><a href="${pageContext.request.contextPath }">Home</a></li>
 				</c:when>
 				<c:otherwise>
 					<li><a href="${pageContext.request.contextPath }">Home</a></li>
 					<li><a href="${pageContext.request.contextPath }/guestbook">방명록</a></li>
-					<li><a href="${pageContext.request.contextPath }/board?a=page">게시판
+					<li><a href="${pageContext.request.contextPath }/board?a=page&page=0&start=1&end=5">게시판
 					<input type="hidden" name="userno" value="${authUser.no }"/></a></li>
+					
 				</c:otherwise>
 			</c:choose>
 		</ul>

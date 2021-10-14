@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mysite.dao.BoardDao;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.PageVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 
@@ -18,12 +19,13 @@ public class ViewAction implements Action {
 		
 		Long userNo = Long.parseLong(request.getParameter("no"));
 		Long boardNo = Long.parseLong(request.getParameter("boardNo"));
+		int current = Integer.parseInt(request.getParameter("page"));
+		int start = Integer.parseInt(request.getParameter("start"));
+		int end = Integer.parseInt(request.getParameter("end"));
 		
 		new BoardDao().updateHit(userNo, boardNo);
 		BoardVo board = new BoardDao().findByNo(userNo, boardNo);
 		request.setAttribute("board", board);
-		
-		System.out.println(board.getHit());
 		
 		MvcUtil.forward("board/view", request, response);
 

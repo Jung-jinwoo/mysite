@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mysite.dao.BoardDao;
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.PageVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 
@@ -23,8 +24,6 @@ public class WriteAttachAction implements Action {
 		String title = request.getParameter("title");
 		String contents = request.getParameter("content");
 		
-		
-		
 		BoardVo boardVo = new BoardVo();
 		boardVo.setTitle(title);
 		boardVo.setContents(contents);
@@ -37,7 +36,7 @@ public class WriteAttachAction implements Action {
 		
 		new BoardDao().insertAttach(boardVo);
 		
-		MvcUtil.redirect("/mysite02/board", request, response);
+		MvcUtil.redirect("/mysite02/board?a=page&page=0&start=1&end=5", request, response);
 	}
 
 }

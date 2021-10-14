@@ -12,6 +12,81 @@ import com.douzone.mysite.vo.BoardVo;
 
 public class BoardDao {
 	
+	public List<BoardVo> findAllByPage(int pageNo){
+		List<BoardVo> boardVo = new ArrayList<BoardVo>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			// 3. SQL 준비
+			String sql = "select b.title, b.contents, b.hit, "
+					+ "b.reg_date, b.group_no, b.order_no, b.depth, u.no , u.name, b.no, b.status  "
+					+ "from board b, user u "
+					+ "where b.user_no = u.no "
+					+ "order by b.group_no desc, b.order_no asc "
+					+ "limit ?, 5";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, ((pageNo-1) * 5));
+			
+			// 5. SQL 실행
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String title = rs.getString(1);
+				String contents = rs.getString(2);
+				Long hit = rs.getLong(3);
+				String regDate = rs.getString(4);
+				Long groupNo  = rs.getLong(5);
+				Long orderNo = rs.getLong(6);
+				Long depth = rs.getLong(7);
+				Long userNo = rs.getLong(8);
+				String userName = rs.getString(9);
+				Long boardNo = rs.getLong(10);
+				int status = rs.getInt(11);
+				
+				BoardVo board = new BoardVo();
+				board.setTitle(title);
+				board.setContents(contents);
+				board.setHit(hit);
+				board.setRegDate(regDate);
+				board.setGroupNo(groupNo);
+				board.setOrderNo(orderNo);
+				board.setDepth(depth);
+				board.setUserNo(userNo);
+				board.setUserName(userName);
+				board.setNo(boardNo);
+				board.setStatus(status);
+				
+				boardVo.add(board);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			// clean up
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return boardVo;
+	}
+	
+	
 	public List<BoardVo> findAll() {
 		List<BoardVo> boardVo = new ArrayList<BoardVo>();
 		Connection conn = null;

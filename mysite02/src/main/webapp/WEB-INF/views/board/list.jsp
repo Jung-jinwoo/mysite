@@ -39,9 +39,19 @@
 							<c:when test="${1 eq board.status }">
 								<tr>
 									<td>${count -status.index }</td>
-									<td style="text-align:left; padding-left:${board.depth*20}px"><img
-										src="${pageContext.servletContext.contextPath }/assets/images/reply.png" /><a
-										href="${pageContext.request.contextPath }/board?a=view&no=${board.userNo}&boardNo=${board.no}">${board.title }</a></td>
+									
+									<c:choose>
+										<c:when test="${0 eq board.depth }">
+										<td>
+											<a href="${pageContext.request.contextPath }/board?a=view&no=${board.userNo}&boardNo=${board.no}&page=${page.currentno}&start=${page.start}&end=${page.end}">${board.title }</a></td>
+										</c:when>
+										<c:otherwise>
+										<td style="text-align:left; padding-left:${board.depth*20}px">
+											<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${board.userNo}&boardNo=${board.no}&page=${page.currentno}&start=${page.start}&end=${page.end}">${board.title }</a></td>
+										</c:otherwise>
+									</c:choose>
+									
 									<td>${board.userName }</td>
 									<td>${board.hit }</td>
 									<td>${board.regDate }</td>
@@ -63,37 +73,66 @@
 				</table>
 
 				<!-- pager 추가 -->
-				<%-- <div class="pager">
-					<ul>
-						<li><a href="">◀</a></li>
-						<li class="selected">1</a></li>
-						<li><a
-							href="${pageContext.servletContext.contextPath }/board?a=page&page=">2</li>
-						<li><a href="">3</a></li>
-						<li><a href="">4</li>
-						<li><a href="">5</li>
-						<li><a href="">▶</a></li>
-					</ul>
-				</div> --%>
+				
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<c:set var="totalpage" value="${page.totalpage }" />
+					<c:set var="totalpage" value="${page.totalpage }" />
+					<c:set var="currentno" value="${page.currentno }" />
+					
+					<c:choose>
+						<c:when test="${page.currentno < 2 }">
+							<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${page.prev}&start=${page.start}&end=${page.end}" class="disabled">◀</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${page.prev}&start=${page.start}&end=${page.end}">◀</a></li>
+						</c:otherwise>
+					</c:choose>
+						
 						<c:choose>
 							<c:when test="${totalpage lt 5 }">
-								<c:forEach var='pageno' begin="${page.currentno }" end="5">
-									<li><a href="">${pageno }</li>
+								<c:forEach var='pageno' begin="${page.start }" end="${page.end }" varStatus="status">
+								<c:set var='index' value='${status.index }' />
+									<c:choose>
+										<c:when test="${index eq currentno }">
+											<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
+										</c:when>
+										<c:when test="${pageno > totalpage }">
+											<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" class="disabled">${pageno }</a></li>
+										</c:when>
+										<c:when test="${pageno ne currentno }">
+											<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
+										</c:when>
+									</c:choose>
 								</c:forEach>
 							</c:when>
+							
 							<c:otherwise>
-								<c:forEach var='pageno' begin="${page.currentno }"
-									end="${page.totalpage}">
-									<li><a href=""><c:out value="${pageno }" /></li>
-
+								<c:forEach var='pageno' begin="${page.start }" end="${page.end }" varStatus="status">
+									<c:set var='index' value='${status.index }' />
+									<c:choose>
+										<c:when test="${index eq currentno }">
+											<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}" >${pageno }</a></li>
+										</c:when>
+										<c:when test="${pageno ne currentno }">
+											<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}" >${pageno }</a></li>
+										</c:when>
+										<c:when test="${pageno ne currentno && pageno > totalpage }">
+											<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}" class="disabled">${pageno }</a></li>
+										</c:when>
+									</c:choose>
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
-						<li><a href="">▶</a></li>
+						
+						<c:choose>
+						<c:when test="${page.currentno eq totalpage }">
+							<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${page.next}&start=${page.start}&end=${page.end}" class="disabled">▶</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${page.next}&start=${page.start}&end=${page.end}">▶</a></li>
+						</c:otherwise>
+					</c:choose>
+						
 					</ul>
 				</div>
 				<!-- pager 추가 -->

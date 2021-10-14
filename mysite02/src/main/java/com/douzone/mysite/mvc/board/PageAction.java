@@ -17,21 +17,36 @@ public class PageAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<BoardVo> list = new BoardDao().findAll();
+		
+		int current = Integer.parseInt(request.getParameter("page"));
+		int start = Integer.parseInt(request.getParameter("start"));
+		int end = Integer.parseInt(request.getParameter("end"));
 		
 		PageVo page = new PageVo();
 		
-		if(page.getCurrentno() == 0) {
+		if(request.getParameter("page").equals("0")) {
 			page.setCurrentno(1);
+			
+		} else {
+			page.setCurrentno((int)current);
 		}
+		
+		if(current > page.getEnd()) {
+			page.setStart(start + 1);
+			page.setEnd(end + 1);
+		}
+		
+		List<BoardVo> list = new BoardDao().findAllByPage(page.getCurrentno());
+		List<BoardVo> totallist = new BoardDao().findAll();
 		
 		page.setPrev(page.getCurrentno() -1);
 		page.setNext(page.getCurrentno() +1);
-		page.setTotalpage(Math.ceil(list.size() / 5));
-		
+		page.setTotalpage(Math.ceil(totallist.size() / 5.0));
+		page.setStart(start);
+		page.setEnd(end);
+
 		request.setAttribute("list", list);
 		request.setAttribute("page", page);
-		System.out.println(page.getTotalpage());
 		
 		MvcUtil.forward("/board/list", request, response);
 	}

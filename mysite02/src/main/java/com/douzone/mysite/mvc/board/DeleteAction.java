@@ -35,7 +35,7 @@ public class DeleteAction implements Action {
 		board.setStatus(0);
 		new BoardDao().delete(board);
 		
-		MvcUtil.redirect(request.getContextPath() + "/board", request, response);
+		MvcUtil.redirect(request.getContextPath() + "/board?a=page&page=0&start=1&end=5", request, response);
 	}
 
 }
