@@ -12,7 +12,8 @@ import com.douzone.mysite.vo.BoardVo;
 
 public class BoardDao {
 	
-	public List<BoardVo> findAllByPage(int pageNo){
+	
+	public List<BoardVo> findAllByPage(int pageNo, String kwd){
 		List<BoardVo> boardVo = new ArrayList<BoardVo>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -26,11 +27,13 @@ public class BoardDao {
 					+ "b.reg_date, b.group_no, b.order_no, b.depth, u.no , u.name, b.no, b.status  "
 					+ "from board b, user u "
 					+ "where b.user_no = u.no "
+					+ "and title like ? "
 					+ "order by b.group_no desc, b.order_no asc "
 					+ "limit ?, 5";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, ((pageNo-1) * 5));
+			pstmt.setString(1, "%" + kwd + "%");
+			pstmt.setInt(2, ((pageNo-1) * 5));
 			
 			// 5. SQL 실행
 			rs = pstmt.executeQuery();
@@ -87,7 +90,7 @@ public class BoardDao {
 	}
 	
 	
-	public List<BoardVo> findAll() {
+	public List<BoardVo> findAll(String kwd) {
 		List<BoardVo> boardVo = new ArrayList<BoardVo>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -101,9 +104,11 @@ public class BoardDao {
 					+ "b.reg_date, b.group_no, b.order_no, b.depth, u.no , u.name, b.no, b.status  "
 					+ "from board b, user u "
 					+ "where b.user_no = u.no "
+					+ "and title like ? "
 					+ "order by b.group_no desc, b.order_no asc";
 			pstmt = conn.prepareStatement(sql);
 
+			pstmt.setString(1, "%" + kwd + "%");
 			// 5. SQL 실행
 			rs = pstmt.executeQuery();
 

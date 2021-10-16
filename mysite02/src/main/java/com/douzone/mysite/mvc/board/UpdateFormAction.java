@@ -22,10 +22,14 @@ public class UpdateFormAction implements Action {
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		Long no = authUser.getNo();
 		
+		int current = Integer.parseInt(request.getParameter("page"));
+		int start = Integer.parseInt(request.getParameter("start"));
+		int end = Integer.parseInt(request.getParameter("end"));
+		
 		Long userNo = Long.parseLong(request.getParameter("userNo"));
 		
 		if(userNo != no) {
-			MvcUtil.redirect(request.getContextPath() + "/board", request, response);
+			MvcUtil.redirect(request.getContextPath() + "/board?a=page&page=" + current + "&start=" + start + "&end=" + end, request, response);
 			return;
 		}
 		

@@ -87,7 +87,7 @@ public class BoardVo {
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
 				+ regDate + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
-				+ ", userName=" + userName + "]";
+				+ ", userName=" + userName + ", status=" + status + "]";
 	}
 	
 	

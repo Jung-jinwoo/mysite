@@ -7,7 +7,7 @@ public class PageVo {
 	private double totalpage; // 페이지 최종 크기
 	private int start = 1;
 	private int end = 5;
-	
+
 	public int getStart() {
 		return start;
 	}

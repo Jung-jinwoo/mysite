@@ -26,10 +26,8 @@ public class BoardActionFactory extends ActionFactory {
 			action = new ViewAction();
 		} else if("page".equals(actionName)) {
 			action = new PageAction();
-		} else if("search".equals(actionName)) {
-			action = new SearchAction();
 		} else {
-			action = new BoardListAction();
+			
 		}
 		return action;
 	}
