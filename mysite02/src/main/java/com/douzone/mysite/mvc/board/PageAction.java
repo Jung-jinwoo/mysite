@@ -31,9 +31,12 @@ public class PageAction implements Action {
 			page.setCurrentno((int)current);
 		}
 		
-		if(current > page.getEnd()) {
-			page.setStart(start + 1);
-			page.setEnd(end + 1);
+		if(page.getCurrentno() < start) {
+			start -= 1;
+			end -= 1;
+		} else if(page.getCurrentno() > end) {
+			start += 1;
+			end += 1;
 		}
 		
 		List<BoardVo> list = new BoardDao().findAllByPage(page.getCurrentno());

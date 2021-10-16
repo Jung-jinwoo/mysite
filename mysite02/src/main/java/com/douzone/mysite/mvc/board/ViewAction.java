@@ -27,6 +27,12 @@ public class ViewAction implements Action {
 		BoardVo board = new BoardDao().findByNo(userNo, boardNo);
 		request.setAttribute("board", board);
 		
+		PageVo page = new PageVo();
+		page.setCurrentno(current);
+		page.setStart(start);
+		page.setEnd(end);
+		request.setAttribute("page", page);
+		
 		MvcUtil.forward("board/view", request, response);
 
 	}

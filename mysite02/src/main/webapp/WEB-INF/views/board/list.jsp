@@ -17,7 +17,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
+				<form id="search_form" action="${pageContext.servletContext.contextPath }/board" method="post">
+					<input type="hidden" name="a" value="search"/>
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
 				</form>
@@ -111,13 +112,13 @@
 									<c:set var='index' value='${status.index }' />
 									<c:choose>
 										<c:when test="${index eq currentno }">
-											<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}" >${pageno }</a></li>
+											<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
+										</c:when>
+										<c:when test="${pageno > totalpage }">
+											<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" class="disabled">${pageno }</a></li>
 										</c:when>
 										<c:when test="${pageno ne currentno }">
-											<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}" >${pageno }</a></li>
-										</c:when>
-										<c:when test="${pageno ne currentno && pageno > totalpage }">
-											<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}" class="disabled">${pageno }</a></li>
+											<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
 										</c:when>
 									</c:choose>
 								</c:forEach>

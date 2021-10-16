@@ -34,7 +34,7 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?a=writeattachform&no=${board.userNo}&boardNo=${board.no}">답글쓰기</a>
-					<a href="${pageContext.request.contextPath }/board">글목록</a> <a href="${pageContext.request.contextPath }/board?a=updateform&userNo=${board.userNo}">글수정</a>
+					<a href="${pageContext.request.contextPath }/board?a=page&page=${page.currentno}&start=${page.start }&end=${page.end}">글목록</a> <a href="${pageContext.request.contextPath }/board?a=updateform&userNo=${board.userNo}">글수정</a>
 				</div>
 			</div>
 		</div>
