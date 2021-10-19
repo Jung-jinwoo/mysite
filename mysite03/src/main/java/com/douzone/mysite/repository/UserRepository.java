@@ -113,7 +113,7 @@ public class UserRepository {
 		return vo;
 	}
 	
-	public UserVo findByEmailAndPassword(String email, String password) {
+	public UserVo findByEmailAndPassword(String email, String password) throws UserRepositoryException {
 		UserVo vo = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -142,7 +142,7 @@ public class UserRepository {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new UserRepositoryException(e.toString());
 		} finally {
 			// clean up
 			try {
@@ -203,7 +203,7 @@ public class UserRepository {
 		return result;
 	}
 	
-	public boolean delete(UserVo userVo) throws UserRepositoryException {
+	public boolean delete(UserVo userVo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -227,7 +227,7 @@ public class UserRepository {
 
 			result = count == 1;
 		} catch (SQLException e) {
-			throw new UserRepositoryException(e.toString());
+			System.out.println("error:" + e);
 		} finally {
 			// clean up
 			try {
