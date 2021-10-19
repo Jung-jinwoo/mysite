@@ -62,7 +62,7 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
 					<url>http://127.0.0.1:8088/manager/text</url>
-					<path>/helloweb</path>
+					<path>/mysite</path>
 					<username>admin</username>
 					<password>manager</password>
 				</configuration>
