@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.UserRepositoryException;
 import com.douzone.mysite.vo.UserVo;
 
 @Repository
@@ -162,7 +163,7 @@ public class UserRepository {
 		return vo;
 	}
 
-	public boolean insert(UserVo userVo) {
+	public boolean insert(UserVo userVo) throws UserRepositoryException {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -185,7 +186,7 @@ public class UserRepository {
 
 			result = count == 1;
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new UserRepositoryException(e.toString());
 		} finally {
 			// clean up
 			try {
@@ -202,7 +203,7 @@ public class UserRepository {
 		return result;
 	}
 	
-	public boolean delete(UserVo userVo) {
+	public boolean delete(UserVo userVo) throws UserRepositoryException {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -226,7 +227,7 @@ public class UserRepository {
 
 			result = count == 1;
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new UserRepositoryException(e.toString());
 		} finally {
 			// clean up
 			try {
