@@ -81,7 +81,7 @@ public class UserController {
 		vo.setNo(authUser.getNo());
 		userService.updateUser(vo);
 		
-		return "redirect:user/update";
+		return "redirect:/user/update";
 	}
 	
 }
