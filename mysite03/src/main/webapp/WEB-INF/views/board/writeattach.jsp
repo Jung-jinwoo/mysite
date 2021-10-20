@@ -15,13 +15,13 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-					<input type="hidden" name="a" value="writeattach">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/writeattach">
 					<input type="hidden" name="userNo" value="${authUser.no }">
-					<input type="hidden" name="boardNo" value="${board.no }">
+					<input type="hidden" name="no" value="${board.no }">
 					<input type="hidden" name="groupNo" value="${board.groupNo }">
 					<input type="hidden" name="orderNo" value="${board.orderNo }">
 					<input type="hidden" name="depth" value="${board.depth }">
+					<input type="hidden" name="status" value=1>
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">${user.name }</th>
@@ -45,7 +45,7 @@
 						</tr>
 						<tr>
 							<td class="label">내용</td>
-							<td><textarea id="content" name="content"></textarea></td>
+							<td><textarea id="content" name="contents"></textarea></td>
 						</tr>
 					</table>
 					<div class="bottom">

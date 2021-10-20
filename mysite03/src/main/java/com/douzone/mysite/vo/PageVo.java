@@ -1,12 +1,12 @@
 package com.douzone.mysite.vo;
 
 public class PageVo {
-	private int currentno = 1; // 현재 번호
+	private int currentno; // 현재 번호
 	private int prev; // 이전 번호
 	private int next; // 다음 번호
 	private double totalpage; // 페이지 최종 크기
-	private int start = 1;
-	private int end = 5;
+	private int start;
+	private int end;
 	private String kwd="";
 	
 

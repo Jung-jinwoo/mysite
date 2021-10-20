@@ -22,4 +22,32 @@ public class BoardService {
 		return br.findAll();
 	}
 	
+	public void insert(BoardVo boardVo) {
+		br.insert(boardVo);
+	}
+
+	public BoardVo findByNo(Long userNo, Long no) {
+		return br.findByNo(userNo, no);
+	}
+	
+	public void insertAttach(BoardVo boardVo) {
+		br.insertAttach(boardVo);
+	}
+
+	public BoardVo findByUserNo(Long userNo) {
+		return br.findByUserNo(userNo);
+	}
+
+	public void update(BoardVo boardVo) {
+		br.update(boardVo);
+	}
+	
+	public void delete(BoardVo boardVo) {
+		br.delete(boardVo);
+	}
+
+	public void hit(Long userNo, Long no) {
+		br.updateHit(userNo, no);
+		
+	}
 }

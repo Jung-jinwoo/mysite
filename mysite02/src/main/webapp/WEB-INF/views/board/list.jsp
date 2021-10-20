@@ -98,7 +98,7 @@
 					<c:set var='index' value='${status.index }' />
 						<c:choose>
 							<c:when test="${index eq currentno }">
-								<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
+								<li class="selected">${pageno }</li>
 							</c:when>
 							<c:when test="${pageno > totalpage }">
 								<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" class="disabled">${pageno }</a></li>

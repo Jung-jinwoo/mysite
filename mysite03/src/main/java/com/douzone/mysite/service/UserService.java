@@ -27,4 +27,8 @@ public class UserService {
 	public void updateUser(UserVo userVo) {
 		userRepository.update(userVo);
 	}
+
+	public UserVo findByNo(Long userNo) {
+		return userRepository.findByNo(userNo);
+	}
 }

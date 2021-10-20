@@ -421,18 +421,20 @@ public class BoardRepository {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = "insert into board values(null, ?, ?, ?, now(), ?,?,?, ?,?)";
+			String sql = "insert into board values "
+					+ "(null,?,?,?,now(), "
+					+ "(select g+1 from (select max(group_no) as g from board)as gn ) "
+					+ ",?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
 			pstmt.setString(1, boardVo.getTitle());
 			pstmt.setString(2, boardVo.getContents());
 			pstmt.setLong(3, boardVo.getHit());
-			pstmt.setLong(4, boardVo.getGroupNo()+1L);
-			pstmt.setLong(5, boardVo.getOrderNo());
-			pstmt.setLong(6, boardVo.getDepth());
-			pstmt.setLong(7, boardVo.getUserNo());
-			pstmt.setInt(8, boardVo.getStatus());
+			pstmt.setLong(4, boardVo.getOrderNo());
+			pstmt.setLong(5, boardVo.getDepth());
+			pstmt.setLong(6, boardVo.getUserNo());
+			pstmt.setInt(7, boardVo.getStatus());
 			
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
@@ -469,7 +471,7 @@ public class BoardRepository {
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
-			pstmt.setInt(1, boardVo.getStatus());
+			pstmt.setInt(1, 0);
 			pstmt.setLong(2, boardVo.getUserNo());
 			pstmt.setLong(3, boardVo.getNo());
 
