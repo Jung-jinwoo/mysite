@@ -14,10 +14,7 @@
 		<ul>
 			<li><a href="${pageContext.request.contextPath }">Home</a></li>
 			<li><a href="${pageContext.request.contextPath }/guestbook/list">방명록</a></li>
-			<li><a
-				href="${pageContext.request.contextPath }/board?a=page&page=0&start=1&end=5">게시판
-					<input type="hidden" name="userno" value="${authUser.no }" />
-			</a></li>
+			<li><a href="${pageContext.request.contextPath }/board/page?pageno=1&start=1&end=5">게시판</a></li>
 		</ul>
 	</div>
 </body>

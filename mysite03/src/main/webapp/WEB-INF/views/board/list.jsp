@@ -17,9 +17,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.servletContext.contextPath }/board" method="post">
-					<input type="hidden" name="a" value="page"/>
-					<input type="hidden" name="page" value="${page.currentno}"/>
+				<form id="search_form" action="${pageContext.servletContext.contextPath }/board/page" method="post">
+					<input type="hidden" name="currentno" value="${page.currentno}"/>
 					<input type="hidden" name="start" value="${page.start}"/>
 					<input type="hidden" name="end" value="${page.end}"/>
 					<input type="text" id="kwd" name="kwd" value=""> 
@@ -87,10 +86,10 @@
 					
 					<c:choose>
 						<c:when test="${page.currentno < 2 }">
-							<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${page.prev}&start=${page.start}&end=${page.end}" class="disabled">◀</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board/page&pageno=${page.prev}&start=${page.start}&end=${page.end}" class="disabled">◀</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${page.prev}&start=${page.start}&end=${page.end}">◀</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board/page&pageno=${page.prev}&start=${page.start}&end=${page.end}">◀</a></li>
 						</c:otherwise>
 					</c:choose>
 						
@@ -98,23 +97,23 @@
 					<c:set var='index' value='${status.index }' />
 						<c:choose>
 							<c:when test="${index eq currentno }">
-								<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
+								<li class="selected"><a href="${pageContext.servletContext.contextPath }/board/page&pageno=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
 							</c:when>
 							<c:when test="${pageno > totalpage }">
-								<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" class="disabled">${pageno }</a></li>
+								<li><a href="${pageContext.servletContext.contextPath }/board/page&pageno=${pageno}&start=${page.start}&end=${page.end}" class="disabled">${pageno }</a></li>
 							</c:when>
 							<c:when test="${pageno ne currentno }">
-								<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
+								<li><a href="${pageContext.servletContext.contextPath }/board/page&pageno=${pageno}&start=${page.start}&end=${page.end}" >${pageno }</a></li>
 							</c:when>
 						</c:choose>
 					</c:forEach>
 						
 					<c:choose>
 						<c:when test="${page.currentno eq totalpage }">
-							<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${page.next}&start=${page.start}&end=${page.end}" class="disabled">▶</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board/page&pageno=${page.next}&start=${page.start}&end=${page.end}" class="disabled">▶</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="${pageContext.servletContext.contextPath }/board?a=page&page=${page.next}&start=${page.start}&end=${page.end}">▶</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board/page&pageno=${page.next}&start=${page.start}&end=${page.end}">▶</a></li>
 						</c:otherwise>
 					</c:choose>
 						
@@ -124,7 +123,7 @@
 
 				<div class="bottom">
 					<a
-						href="${pageContext.servletContext.contextPath }/board?a=writeform"
+						href="${pageContext.servletContext.contextPath }/board/write"
 						id="new-book">글쓰기</a>
 				</div>
 			</div>
