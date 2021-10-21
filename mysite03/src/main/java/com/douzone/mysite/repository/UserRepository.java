@@ -1,11 +1,13 @@
 package com.douzone.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.exception.UserRepositoryException;
@@ -13,6 +15,9 @@ import com.douzone.mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
+	
+	@Autowired
+	private DataSource dataSource;
 
 	public boolean update(UserVo userVo) {
 		boolean result = false;
@@ -20,7 +25,7 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			// 3. SQL 준비
 			String sql = "update user set name=?, password=?, gender=? where no=?";
@@ -62,7 +67,7 @@ public class UserRepository {
 		ResultSet rs = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			// 3. SQL 준비
 			String sql = "select no, name, email, password, gender, join_date from user where no = ?";
@@ -120,7 +125,7 @@ public class UserRepository {
 		ResultSet rs = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			// 3. SQL 준비
 			String sql = "select no, name from user where email=? and password=?";
@@ -169,7 +174,7 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			// 3. SQL 준비
 			String sql = "insert into user values(null, ?, ?, ?, ?, now())";
@@ -209,7 +214,7 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			// 3. SQL 준비
 			String sql = "delete from guestbook "
@@ -245,20 +250,4 @@ public class UserRepository {
 		return result;
 	}
 
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-
-		try {
-			// 1. JDBC Driver 로딩
-			Class.forName("org.mariadb.jdbc.Driver");
-
-			// 2. 연결하기
-			String url = "jdbc:mysql://127.0.0.1:3307/webdb?charset=utf8";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		return conn;
-	}
 }
