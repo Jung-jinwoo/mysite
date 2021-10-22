@@ -3,17 +3,14 @@ package com.douzone.mysite.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.BoardVo;
@@ -30,18 +27,13 @@ public class BoardController {
 	@Autowired
 	private UserService us;
 	
-	
+	@Auth
 	@RequestMapping(value="/page/{pageno}&{start}&{end}", method=RequestMethod.GET)
 	public String page(	@PathVariable("pageno") String pageno,
 						@PathVariable("start") String start,
 						@PathVariable("end") String end,
-						HttpSession session, PageVo pageVo, Model model) {
+						@AuthUser UserVo authUser, PageVo pageVo, Model model) {
 		
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-	
 		int pageNo = Integer.parseInt(pageno);
 		int startNo = Integer.parseInt(start);
 		int endNo = Integer.parseInt(end);
@@ -76,14 +68,15 @@ public class BoardController {
 		return "board/write";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String write(BoardVo boardVo) {			
+	public String write(@AuthUser UserVo authUser, BoardVo boardVo) {			
 		bs.insert(boardVo);
 		
 		return "redirect:/board/page/1&1&5";
 	}
 	
-	
+	@Auth
 	@RequestMapping(value="/writeattach/{userNo}&{boardNo}", method=RequestMethod.GET)
 	public String writeattach(@PathVariable("userNo") Long userNo,
 								@PathVariable("boardNo") Long no,
@@ -103,7 +96,6 @@ public class BoardController {
 	public String writeattach(BoardVo boardVo) {
 		
 		bs.insertAttach(boardVo);
-		System.out.println(boardVo);
 		return "redirect:/board/page/1&1&5";
 	}
 	
@@ -124,10 +116,9 @@ public class BoardController {
 		return "board/view";
 	}
 	
-	//@Auth
+	@Auth
 	@RequestMapping(value="/update/{userNo}&{currentno}&{start}&{end}", method=RequestMethod.GET)
-	public String update(BoardVo boardVo, PageVo pageVo, HttpSession session, Model model) {
-		UserVo user = (UserVo)session.getAttribute("authUser");
+	public String update(BoardVo boardVo, PageVo pageVo, @AuthUser UserVo authUser, Model model) {
 		
 		boardVo = bs.findByUserNo(boardVo.getUserNo());
 		Map<String,Object> map = new HashMap<>();
@@ -138,8 +129,9 @@ public class BoardController {
 		return "board/update";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(BoardVo boardVo, PageVo pageVo) {
+	public String update(@AuthUser UserVo authUser, BoardVo boardVo, PageVo pageVo) {
 		
 		bs.update(boardVo);
 		System.out.println(boardVo);
@@ -150,15 +142,10 @@ public class BoardController {
 				"&" + pageVo.getEnd();
 	}
 	
+	@Auth
 	@RequestMapping(value="/delete/{userNo}&{no}&{currentno}&{start}&{end}", method=RequestMethod.GET)
-	public String delete(HttpSession session, BoardVo boardVo, PageVo pageVo) {
-		UserVo user = (UserVo)session.getAttribute("authUser");
-		
-		if(boardVo.getUserNo() != user.getNo()) {
-			return "redirect:/";
-		}
+	public String delete(@AuthUser UserVo authUser,BoardVo boardVo, PageVo pageVo) {
 		bs.delete(boardVo);
-		System.out.println(boardVo);
 		
 		return "redirect:/board/page/" + pageVo.getCurrentno() + 
 				"&" + pageVo.getStart() + 
