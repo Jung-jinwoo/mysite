@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
@@ -35,9 +36,9 @@ public class UserController {
 		return "user/login";
 	}
 	
-	//@Auth
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(UserVo authUser, Model model) {
+	public String update(@AuthUser UserVo authUser, Model model) {
 		
 		UserVo userVo = userService.getUser(authUser.getNo());
 		model.addAttribute("user", userVo);

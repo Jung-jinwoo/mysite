@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.BoardVo;
@@ -69,13 +70,9 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)
-	public String write(HttpSession session) {
-		UserVo user = (UserVo)session.getAttribute("authUser");
-		if(user == null) {
-			return "redirect:/user/login";
-		}
-		
+	public String write() {
 		return "board/write";
 	}
 	
@@ -127,14 +124,11 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	//@Auth
 	@RequestMapping(value="/update/{userNo}&{currentno}&{start}&{end}", method=RequestMethod.GET)
 	public String update(BoardVo boardVo, PageVo pageVo, HttpSession session, Model model) {
 		UserVo user = (UserVo)session.getAttribute("authUser");
-		if(boardVo.getUserNo() != user.getNo()) {
-			return "redirect:/board/page/" + pageVo.getCurrentno() + 
-					"&" + pageVo.getStart() + 
-					"&" + pageVo.getEnd();
-		}
+		
 		boardVo = bs.findByUserNo(boardVo.getUserNo());
 		Map<String,Object> map = new HashMap<>();
 		map.put("board", boardVo);

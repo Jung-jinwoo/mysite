@@ -13,8 +13,15 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 		
+	<!-- auto proxy -->
+	<aop:aspectj-autoproxy />
+		
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven >
+		<mvc:argument-resolvers>
+			<bean class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 
 	<!-- 서블릿 컨테이너(tomcat)의 DefaultServlet 위임(Delegate) Handler -->
 	<mvc:default-servlet-handler/>
