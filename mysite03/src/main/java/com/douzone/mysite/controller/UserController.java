@@ -35,40 +35,13 @@ public class UserController {
 		return "user/login";
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(HttpSession session,
-						@RequestParam(value="email", required=true, defaultValue="") String email,
-						@RequestParam(value="password", required=true, defaultValue="") String password,
-						Model model) {
-		
-		UserVo vo = userService.getUser(email, password);
-		if(vo == null) {
-			model.addAttribute("userVo", vo);
-			return "user/login";
-		}
-		
-		// 인증 처리
-		session.setAttribute("authUser", vo);
-		return "redirect:/";
-	}
-	
-	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logout(HttpSession session) {
-		session.removeAttribute("authUser");
-		session.invalidate();
-		return "redirect:/";
-	}
-	
+	//@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
+	public String update(UserVo authUser, Model model) {
 		
-		Long no = authUser.getNo();
-		UserVo userVo = userService.getUser(no);
+		UserVo userVo = userService.getUser(authUser.getNo());
 		model.addAttribute("user", userVo);
+		
 		return "user/update";
 	}
 	

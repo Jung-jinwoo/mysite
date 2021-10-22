@@ -70,7 +70,12 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.GET)
-	public String write() {
+	public String write(HttpSession session) {
+		UserVo user = (UserVo)session.getAttribute("authUser");
+		if(user == null) {
+			return "redirect:/user/login";
+		}
+		
 		return "board/write";
 	}
 	

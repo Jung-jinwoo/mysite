@@ -53,6 +53,11 @@ public class PageVo {
 	public void setNext(int next) {
 		this.next = next;
 	}
+	@Override
+	public String toString() {
+		return "PageVo [currentno=" + currentno + ", prev=" + prev + ", next=" + next + ", totalpage=" + totalpage
+				+ ", start=" + start + ", end=" + end + ", kwd=" + kwd + "]";
+	}
 	
 	
 }
