@@ -44,7 +44,7 @@
 	</bean>
 	
 	<!-- mvc url-resource mapping -->
-	<mvc:resources mapping="/images/**" location="file:/upload-images/" />
+	<mvc:resources mapping="/gallery/images/**" location="file:/upload-images/" />
 	
 	<!-- Interceptor -->
 	<mvc:interceptors>
