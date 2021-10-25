@@ -70,6 +70,9 @@
 	<!-- mvc url-resource mapping -->
 	<mvc:resources mapping="/gallery/images/**"
 		location="file:/upload-images/" />
+		
+		<mvc:resources mapping="/admin/images/**"
+		location="file:/admin-images/" />
 
 	<!-- Interceptor -->
 	<mvc:interceptors>
@@ -79,7 +82,7 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/logout" />
-			<bean class="com.douzone.mysite.security.LoginInterceptor" />
+			<bean class="com.douzone.mysite.security.LogoutInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />

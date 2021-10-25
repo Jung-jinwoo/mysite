@@ -14,7 +14,13 @@
 		<c:set var="role" value="ADMIN"></c:set>
 		<c:choose>
 			<c:when test="${role eq authUser.role }">
-				<li><a href="${pageContext.request.contextPath }/admin">관리자 페이지</a></li>
+				<ul>
+					<li><a href="${pageContext.request.contextPath }">Home</a></li>
+					<li><a href="${pageContext.request.contextPath }/guestbook/list">방명록</a></li>
+					<li><a href="${pageContext.request.contextPath }/board/page/1&1&5">게시판</a></li>
+					<li><a href="${pageContext.request.contextPath }/gallery">갤러리</a></li>
+					<li><a href="${pageContext.request.contextPath }/admin/main/${siteVo.no}">관리자 페이지</a></li>
+				</ul>
 			</c:when>
 			<c:otherwise>
 				<ul>

@@ -22,11 +22,27 @@ $(function(){
 		
 		console.log(email);
 		$.ajax({
-			url: "${pageContext.request.contextPath }/user/checkemail?email=" + email,
+			url: "${pageContext.request.contextPath }/user/api/checkemail?email=" + email,
 			type: "get",
 			dataType: "json",
+			error: function(xhr, status, e){
+				console.log(status, e);
+			},
 			success: function(response) {
 				console.log(response);
+				if(response.result != "success"){
+					console.error(response.message);
+					return;
+				}
+				if(response.data) {
+					alert("존재하는 이메일 입니다.");
+					$("#email")
+						.val("")
+						.focus();
+					return;
+				} 
+				$("#btn-check-email").hide();
+				$("#img-check-email").show();
 			}
 		});
 	});
@@ -44,9 +60,12 @@ $(function(){
 					action="${pageContext.request.contextPath }/user/joinsuccess">
 					<label class="block-label" for="name">이름</label> 
 					<input id="name" name="name" type="text" value=""> 
+					
 					<label class="block-label" for="email">이메일</label> 
 					<input id="email" name="email" type="text" value=""> 
-					<input type="button" value="id 중복체크" id="btn-check-email"> 
+					<input type="button" id="btn-check-email" value="중복체크"> 
+					<img id="img-check-email" src="${pageContext.request.contextPath }/assets/images/check.png" style='width:16px; display: none' />
+					
 					<label class="block-label">패스워드</label> 
 					<input name="password" type="password" value="">
 
