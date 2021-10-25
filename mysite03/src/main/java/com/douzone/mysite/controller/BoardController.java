@@ -61,6 +61,16 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@RequestMapping("/search")
+	public String search(PageVo pageVo, Model model) {
+		List<BoardVo> list = bs.findByKwd(pageVo.getKwd());
+		Map<String,Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("page", pageVo);
+		model.addAllAttributes(map);
+		return "board/list";
+	}
+	
 	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)
 	public String write() {

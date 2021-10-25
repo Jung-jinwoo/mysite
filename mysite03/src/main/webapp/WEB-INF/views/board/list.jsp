@@ -17,7 +17,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.servletContext.contextPath }/board/page" method="post">
+				<form id="search_form" action="${pageContext.servletContext.contextPath }/board/search" method="post">
 					<input type="hidden" name="currentno" value="${page.currentno}"/>
 					<input type="hidden" name="start" value="${page.start}"/>
 					<input type="hidden" name="end" value="${page.end}"/>

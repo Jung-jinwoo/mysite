@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.BoardVo;
@@ -15,7 +17,8 @@ import com.douzone.mysite.vo.BoardVo;
 @Repository
 public class BoardRepository {
 	
-	
+	@Autowired
+	private SqlSession sqlSession;
 	
 	public List<BoardVo> findAllByPage(int pageNo){
 		List<BoardVo> boardVo = new ArrayList<BoardVo>();
@@ -515,5 +518,11 @@ public class BoardRepository {
 		}
 
 		return conn;
+	}
+
+
+	public List<BoardVo> findByKwd(String kwd) {
+		kwd = "%" + kwd + "%";
+		return sqlSession.selectList("board.findByKwd", kwd);
 	}
 }

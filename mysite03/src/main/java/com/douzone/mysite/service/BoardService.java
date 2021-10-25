@@ -22,6 +22,10 @@ public class BoardService {
 		return br.findAll();
 	}
 	
+	public List<BoardVo> findByKwd(String kwd){
+		return br.findByKwd(kwd);
+	}
+	
 	public void insert(BoardVo boardVo) {
 		br.insert(boardVo);
 	}
