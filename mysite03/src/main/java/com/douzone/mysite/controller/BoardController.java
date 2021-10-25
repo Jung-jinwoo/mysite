@@ -27,7 +27,6 @@ public class BoardController {
 	@Autowired
 	private UserService us;
 	
-	@Auth
 	@RequestMapping(value="/page/{pageno}&{start}&{end}", method=RequestMethod.GET)
 	public String page(	@PathVariable("pageno") String pageno,
 						@PathVariable("start") String start,

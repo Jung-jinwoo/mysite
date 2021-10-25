@@ -1,16 +1,37 @@
 package com.douzone.mysite.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.douzone.mysite.security.Auth;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MainController {
 
-	@Auth()
 	@RequestMapping({"", "/main"})
 	public String index() {
 		return "main/index";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/msg01")
+	public String message01() {
+		return "안녕";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/msg02")
+	public Map message02(HttpServletResponse response) {
+		//response.setContentType("application/json: charset:utf-8");
+		//response.getWriter().print("{\"message\":"\Hello World\"}");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("message", "Hello World");
+		
+		return map;
+		}
 }

@@ -27,31 +27,25 @@ public class GalleryController {
 	private GalleryService galleryService;
 	
 	@RequestMapping("")
-	public String index(HttpSession session, Model model) {
-		UserVo user = (UserVo)session.getAttribute("authUser");
-		if(user == null) {
-			return "redirect:/";
-		}
+	public String index(Model model) {
+		
 		List<GalleryVo> list = galleryService.findAll();
 		model.addAttribute("list", list);
 		
 		return "gallery/index";
 	}
 	
+	@Auth
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public String upload(@RequestParam(value="comments", required=true, defaultValue="") String comments,
 						@RequestParam(value="file") MultipartFile file) {
 			
-		String url = galleryService.restore(file);
-		GalleryVo vo = new GalleryVo();
-		vo.setUrl(url);
-		vo.setComments(comments);
-		
-		galleryService.insert(vo);
+		galleryService.restore(file, comments);
 		
 		return "redirect:/gallery";
 	}
 	
+	@Auth
 	@RequestMapping("/delete/{no}")
 	public String delete(@PathVariable Long no) {
 		galleryService.delete(no);

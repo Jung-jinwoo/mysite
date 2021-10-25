@@ -29,7 +29,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 		// 4. Handler Method에 @Auth가 없으면 Type에 있는지 확인
 		if(auth == null) {
 			// 과제
-			//auth = handlerMethod.getMethodAnnotation(handlerMethod.hasMethodAnnotation(Auth.class));
+			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
 		}
 		
 		// 5. Type과 Method에 @Auth가 적용이 안되어 있는 경우
@@ -37,7 +37,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 			return true;
 		}
 		
-		// 6. @Auth가 적용이 되어 있기 떄문에 인즈(Authenfiaction) 여부 확인
+		// 6. @Auth가 적용이 되어 있기 떄문에 인증(Authenfiaction) 여부 확인
 		HttpSession session = request.getSession();
 		if(session == null) {
 			response.sendRedirect(request.getContextPath() + "/user/login");
@@ -56,10 +56,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 		
 		// 8. 권한 체크
 		//		과제
+		if(authUser.getRole() == "ADMIN") {
+			return true;
+		} else if(authUser.getRole().equals(role)) {
+			return true;
+		}
 		
-		 
-		
-		return true;
+		response.sendRedirect(request.getContextPath());
+		return false;
 	}
 	
 }
