@@ -21,6 +21,10 @@
         http://www.springframework.org/schema/task/spring-task.xsd">
 
 
+
+	<!-- auto proxy -->
+	<aop:aspectj-autoproxy />
+
 	<!-- Connection Pool DataSource -->
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
@@ -44,10 +48,6 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
-
-
-	<!-- auto proxy -->
-	<aop:aspectj-autoproxy />
 
 	<context:annotation-config />
 
