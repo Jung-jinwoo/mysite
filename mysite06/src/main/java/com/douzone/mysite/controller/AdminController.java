@@ -20,11 +20,10 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
-	@RequestMapping("/main/{no}")
+	@RequestMapping({"/main/{no}"})
 	public String main(SiteVo siteVo, Model model) {
 		siteVo = adminService.findByNo(siteVo.getNo());
 		model.addAttribute("siteVo", siteVo);
-		
 		return "admin/main";
 	}
 	
