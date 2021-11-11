@@ -27,6 +27,11 @@ public class GuestbookController {
 		return "guestbook/list";
 	}
 	
+	@RequestMapping("/list/spa")
+	public String spa() {
+		return "guestbook/list-spa";
+	}
+	
 	@Auth
 	@RequestMapping(value="/delete/{no}", method=RequestMethod.GET)
 	public String delete(@PathVariable Long no, Model model) {

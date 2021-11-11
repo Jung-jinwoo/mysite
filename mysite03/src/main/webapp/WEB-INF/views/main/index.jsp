@@ -14,7 +14,6 @@
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
-
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
@@ -28,6 +27,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>

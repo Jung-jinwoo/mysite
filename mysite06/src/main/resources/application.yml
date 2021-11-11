@@ -6,6 +6,8 @@ spring:
 ---
 # common - spring configuration
 spring:
+
+   #devtools - live reload
    devtools:
       livereload:
          enabled: true
@@ -14,43 +16,31 @@ spring:
       view:
          prefix: /WEB-INF/views/
          suffix: .jsp
-   #http
-   http:
-      encoding:
-         charset: utf-8
-         enabled: true
-         forced: false
-         forced-request: false
-         forced-response: false
-   #datasource
-   datasource:
-      driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3307/webdb?charsetEncoding=utf8
-      username: webdb
-      password: webdb
-      initialSize: 10
-      maxActive: 20
 
    #message resource
    messages:
       always-message-format: true
       basename: messages/messages_ko
       encoding: utf-8
+
    #multipart
    servlet:
       multipart:
          enabled: true
          max-file-size: 50MB
          max-request-size: 50MB
+
    #AOP
    aop:
       auto: true
       proxy-target-class: true
 
 ---
-# production profile - spring boot configuration
+# dev profile - spring boot configuration
 spring:
-   profile: product
+   config:
+      activate:
+         on-profile: dev
 
    #datasource
    datasource:
@@ -62,9 +52,22 @@ spring:
       maxActive: 20
 
 ---
-# dev profile - spring boot configuration
+
+# production profile - spring boot configuration
 spring:
-   profile: dev
+   config:
+      activate:
+         profile: production
+
+   #datasource
+   datasource:
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3307/webdb?charsetEncoding=utf8
+      username: webdb
+      password: webdb
+      initialSize: 10
+      maxActive: 20
+
 
 ---
 # server
@@ -72,6 +75,12 @@ server:
    port: 8080
    servlet: 
       context-path: /mysite06
+      encoding:
+         charset: utf-8
+         enabled: true
+         forced: false
+         forced-request: false
+         forced-response: false
 
 ---
 # mybatis

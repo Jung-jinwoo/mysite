@@ -36,7 +36,8 @@
 	
 	<update id="update" parameterType="uservo">
 		<![CDATA[
-			update user set name = #{name}, password = #{password}, gender = #{gender} where no = #{no}
+			update user set name = #{name}, password = #{password}, gender = #{gender} 
+			where no = #{no}
 		]]>
 	</update>
 </mapper>
